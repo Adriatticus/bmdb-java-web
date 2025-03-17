@@ -66,5 +66,26 @@ public class MovieController {
 					HttpStatus.NOT_FOUND, "Movie not found for id "+id);
 		}
 	}
+	
+	@GetMapping("/rating/{rating}")
+	public List<Movie> getMoviesForRating(@PathVariable String rating) {
+		return movieRepo.findByRating(rating);
+	}
+	
+	@PutMapping("/upd-rating/{id}")
+	public void updateRatingForMovie(@PathVariable int id) {
+		// update movie rating??
+		// get a movie for id
+		if (movieRepo.existsById(id)) {
+			Movie m = movieRepo.findById(id).get();
+			m.setRating("R");
+			movieRepo.save(m);
+		}
+		else {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Movie not found for id "+id);
+		}
+		// set that movie's rating to R
+		// save the movie
+	}
 
 }
